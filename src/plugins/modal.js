@@ -1,0 +1,78 @@
+const _createModal = (options) => {
+  const DEFAULT_WIDTH = '600px';
+  const modal = document.createElement("div");
+  modal.classList.add("amodal");
+  modal.insertAdjacentHTML(
+    "afterbegin",
+    `
+    <div class="modal-overlay" data-close="true">
+        <div class="modal-window" style="width: ${options.width || DEFAULT_WIDTH}">
+          <div class="modal-header">
+            <span class="modal-title">${options.title || 'Window'}</span>
+            ${options.closable ? `<span className="modal-close" data-close="true">&times;</span>` : ''}
+          </div>
+          ${options.content || ''}
+          <div class="modal-footer">
+            <button>Ok</button>
+            <button>Cancel</button>
+          </div>
+        </div>
+      </div>
+  `
+  );
+  document.body.appendChild(modal);
+  return modal;
+};
+/*
+* title: string
+* closable: boolean
+* content: string
+* width: string ('400px')
+* destroy(): void
+* Modal should close
+* -----------------------
+* setContent(html: string): void | PUBLIC
+* onClose(): void
+* onOpen(): void
+* beforeClose(): boolean
+* * */
+
+$.modal = (options) => {
+  const ANIMATION_TIME = 500;
+  const $modal = _createModal(options);
+  let closing = false;
+  let destroyed = false;
+
+  const modal = {
+    open() {
+      if ( destroyed ) {
+        return console.log('Modal is destriyed');
+      }
+      !closing && $modal.classList.add('open');
+    },
+    close() {
+      closing = true;
+      $modal.classList.remove('open');
+      $modal.classList.add('hide');
+      setTimeout( () => {
+        $modal.classList.remove('hide');
+        closing = false;
+      }, ANIMATION_TIME)
+    },
+  }
+  let listener = event => {
+    if (event.target.dataset.close) {
+      modal.close()
+    }
+  }
+
+  $modal.addEventListener('click', listener);
+
+  return Object.assign(modal, {
+    destroy() {
+      $modal.parentNode.removeChild($modal);
+      $modal.parentNode.removeEventListener('click', listener);
+      destroyed = true;
+    }
+  })
+};
