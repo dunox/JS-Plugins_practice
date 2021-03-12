@@ -9,9 +9,12 @@ const _createModal = (options) => {
         <div class="modal-window" style="width: ${options.width || DEFAULT_WIDTH}">
           <div class="modal-header">
             <span class="modal-title">${options.title || 'Window'}</span>
-            ${options.closable ? `<span className="modal-close" data-close="true">&times;</span>` : ''}
+            ${options.closable ? `<span class="modal-close" data-close="true">&times;</span>` : ''}
           </div>
-          ${options.content || ''}
+          <div class="modal-body" data-content>
+            ${options.content || ''}
+          </div>
+          
           <div class="modal-footer">
             <button>Ok</button>
             <button>Cancel</button>
@@ -73,6 +76,9 @@ $.modal = (options) => {
       $modal.parentNode.removeChild($modal);
       $modal.parentNode.removeEventListener('click', listener);
       destroyed = true;
+    },
+    setContent(html) {
+      $modal.querySelector(['data-content']).innerHTML = html;
     }
   })
 };
