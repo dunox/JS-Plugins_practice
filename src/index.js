@@ -1,3 +1,33 @@
+const fruits = [
+    {
+        id: 1,
+        title: "Яблоки",
+        price: 20,
+        img: 'https://lifeglobe.net/x/entry/6259/1a-0.jpg' 
+    },
+    {
+        id: 2,
+        title: "Апельсины",
+        price: 30,
+        img: 'https://grandkulinar.ru/uploads/posts/2014-07/1404571972_apelsiny.jpg' 
+    },
+    {
+        id: 3,
+        title: "Манго",
+        price: 50,
+        img: 'https://befreshcorp.net/wp-content/uploads/2017/07/product-packshot-mango.jpg' 
+    },
+]
+/*
+ 1. Показать цену в модалке
+ 2. Динамически на основе массива вывести карточки
+ 3. Модалка для удаления с 2-мя кнопками
+ ------
+ 4. При нажатии на удалить - удаляем карточку 
+*/
+
+
+
 const modal = $.modal({
     title: 'Andriy Modal',
     closable: true,
@@ -9,9 +39,11 @@ const modal = $.modal({
     footerButtons: [
         { text: 'Ok', type: 'primary', handler() {
             console.log('Primary btn clicked');
+            modal.close();
         }},
         { text: 'Cancel', type: 'danger', handler() {
             console.log('Danger btn clicked');
+            modal.close();
         }}
     ]
 });
