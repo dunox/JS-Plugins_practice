@@ -20,13 +20,31 @@ const fruits = [
 ]
 /*
  1. Показать цену в модалке
- 2. Динамически на основе массива вывести карточки
+ 2. Динамически на основе массива вывести карточки +
  3. Модалка для удаления с 2-мя кнопками
  ------
  4. При нажатии на удалить - удаляем карточку 
 */
+const fruitCard = (fruits.map( fruit => 
+    `
+    <div class="col">
+        <div class="card">
+            <img class="card-img-top" src="${fruit.img}" style="max-height: 200px; width: auto;">
+            <div class="card-body">
+                <h5 class="card-title">${fruit.title}</h5>
+                <a href="#" class="btn btn-primary" data-price >Посмотреть цену</a>
+                <a href="#" class="btn btn-danger" data-delete >Удалить</a>
+            </div>
+        </div>
+    </div>
+    `
+));
 
+function render() {
+    document.getElementById('fruits').innerHTML = fruitCard.join('');
+}
 
+render();
 
 const modal = $.modal({
     title: 'Andriy Modal',
