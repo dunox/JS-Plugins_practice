@@ -26,6 +26,25 @@ const fruits = [
  4. При нажатии на удалить - удаляем карточку 
 */
 
+const fruitCard = fruit => `
+    <div class="col">
+        <div class="card">
+            <img class="card-img-top" style="max-height: 250px; width: auto;" src="${fruit.img}" alt="${fruit.title}">
+            <div class="card-body">
+                <h5 class="card-title">${fruit.title}</h5>
+                <a href="#" class="btn btn-primary" data-btn="price">Посмотреть цену</a>
+                <a href="#" class="btn btn-danger" data-btn="delete">Удалить</a>
+            </div>
+            </div>
+        </div>
+    `
+
+const renderFruitList = () => {
+    const fruitToHtml = fruits.map(fruitCard).join('');
+    document.getElementById('fruits').innerHTML = fruitToHtml;
+}
+
+renderFruitList();
 
 
 const modal = $.modal({
